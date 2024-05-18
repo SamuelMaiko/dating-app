@@ -1,0 +1,14 @@
+{% autoescape off %}
+
+Hello {{user.username}},
+
+Thank you for creating an account with Our Dating App.
+
+Click here to activate your account: http://{{domain}}{% url 'account-activation' uid64=uid64 token=token %}
+
+
+Best Regards,
+Dev Team
+Our Dating App
+
+{% endautoescape %}
