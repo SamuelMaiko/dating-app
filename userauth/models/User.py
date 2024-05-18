@@ -11,5 +11,6 @@ class CustomUser(AbstractUser):
     
     class Meta:
         db_table="users" 
+        # verbos_plural_name="User"
         
     
