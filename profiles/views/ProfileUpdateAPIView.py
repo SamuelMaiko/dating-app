@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from profiles.models import UserProfile
-from profiles.serializers import ProfileUpdateSerializer
+from profiles.serializers import ProfileSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -21,19 +21,7 @@ class ProfileUpdateAPIView(APIView):
                 required=True
             )
         ],
-        request_body=openapi.Schema(
-            type=openapi.TYPE_OBJECT,
-            properties={
-                'date_of_birth': openapi.Schema(type=openapi.TYPE_STRING, description='New date of birth of the user'),
-                'gender': openapi.Schema(type=openapi.TYPE_STRING, description='New gender of the user'),
-                'denomination': openapi.Schema(type=openapi.TYPE_STRING, description='New denomination of the user'),
-                'location': openapi.Schema(type=openapi.TYPE_STRING, description='New location of the user'),
-                'profile_picture': openapi.Schema(type=openapi.TYPE_STRING, description='New URL of the profile picture'),
-                'bio': openapi.Schema(type=openapi.TYPE_STRING, description='New biography of the user'),
-                # Add more properties as needed
-            },
-            required=[],  # Add required fields if any
-        ),
+        request_body=ProfileSerializer,
         responses={
             200: openapi.Response(
                 description="Profile updated successfully",
@@ -66,7 +54,7 @@ class ProfileUpdateAPIView(APIView):
         
         user_profile=request.user.user_profile
 
-        serializer = ProfileUpdateSerializer(user_profile, data=request.data)
+        serializer = ProfileSerializer(user_profile, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)

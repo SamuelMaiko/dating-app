@@ -1,3 +1,2 @@
-from .ProfileUpdateSerializer import ProfileUpdateSerializer
 from .TemporaryProfileSerializer import TemporaryProfileSerializer
 from .ProfileSerializer import ProfileSerializer

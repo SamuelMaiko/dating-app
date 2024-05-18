@@ -21,18 +21,7 @@ class PreferenceUpdateView(APIView):
                 required=True
             )
         ],
-        request_body=openapi.Schema(
-            type=openapi.TYPE_OBJECT,
-            properties={
-                'min_age': openapi.Schema(type=openapi.TYPE_INTEGER, description='Minimum age preference'),
-                'max_age': openapi.Schema(type=openapi.TYPE_INTEGER, description='Maximum age preference'),
-                'location': openapi.Schema(type=openapi.TYPE_STRING, description='Location preference'),
-                'gender': openapi.Schema(type=openapi.TYPE_STRING, description='Gender preference'),
-                'denomination': openapi.Schema(type=openapi.TYPE_STRING, description='Denomination preference'),
-                # Add more properties as needed
-            },
-            required=[],  # Add required fields if any
-        ),
+        request_body=PreferenceSerializer,
         responses={
             200: openapi.Response(
                 description="Preferences updated successfully",
