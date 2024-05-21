@@ -12,10 +12,3 @@ urlpatterns = [
     path('verify-otp/', views.VerifyOTPView.as_view(), name="verify-otp"),
     path('reset-password/', views.ResetPasswordView.as_view(), name="reset-password"),
 ]
-
-
-# tomorrow
-# -forgot password
-# -document
-
-# -maybe deploy
