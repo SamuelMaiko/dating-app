@@ -8,6 +8,7 @@ urlpatterns = [
     path('chatapp/', include('chatapp.urls')),
     path('matches/', include('matches.urls')),
     path('appsettings/', include('appsettings.urls')),
+    path('discover/', include('discover.urls')),
     path('groups/', include('groups.urls')),
     
 ]

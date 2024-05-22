@@ -39,3 +39,16 @@ if settings.DEBUG:
    # sending images
    # serializers
    # to representation
+   
+   # tomorrow
+   # documenting chatapp apis
+
+   #DISCOVER PAGE
+   # display user username, image, age
+   # 
+
+   # todo
+   # searching and filtering
+   # matching
+   # realtime updates
+   # hobbies

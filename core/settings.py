@@ -40,7 +40,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-1-3az+0i^!n6l-ozsp!o4hbzgo-53zfc-=)g=-=+t^+tj0b5p3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS=["maikomoringa.pythonanywhere.com", "localhost"]
 
@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'matches',
     'groups',
     'appsettings',
+    'discover',
     'rest_framework',
     'rest_framework.authtoken',
     'tailwind',

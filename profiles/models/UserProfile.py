@@ -8,7 +8,7 @@ class UserProfile(models.Model):
         MALE = 'Male', 'Male'
         FEMALE = 'Female', 'Female'
         OTHER = 'Other', 'Other'
-        
+         
     class DenominationChoices(models.TextChoices):
         CATHOLIC='Catholic','Catholic'
         ADVENTIST='Adventist','Adventist'

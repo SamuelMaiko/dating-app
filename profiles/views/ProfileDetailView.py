@@ -27,11 +27,13 @@ class ProfileDetailView(APIView):
                 schema=openapi.Schema(
                     type=openapi.TYPE_OBJECT,
                     properties={
+                        'username': openapi.Schema(type=openapi.TYPE_STRING, description='Username of the user'),
+                        'email': openapi.Schema(type=openapi.TYPE_STRING, description='Email of the user'),
                         'profile_picture': openapi.Schema(type=openapi.TYPE_STRING, description='URL of the profile picture'),
                         'bio': openapi.Schema(type=openapi.TYPE_STRING, description='Biography of the user'),
                         'gender': openapi.Schema(type=openapi.TYPE_STRING, description='Gender of the user'),
-                        'age': openapi.Schema(type=openapi.TYPE_INTEGER, description='Age of the user'),
                         'date_of_birth': openapi.Schema(type=openapi.TYPE_STRING, description='Date of birth of the user'),
+                        'age': openapi.Schema(type=openapi.TYPE_INTEGER, description='Age of the user'),
                         'denomination': openapi.Schema(type=openapi.TYPE_STRING, description='Denomination of the user'),
                         'location': openapi.Schema(type=openapi.TYPE_STRING, description='Location of the user'),
                         # Add more properties as needed

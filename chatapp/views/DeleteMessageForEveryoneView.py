@@ -3,15 +3,60 @@ from rest_framework.response import Response
 from rest_framework import status
 from chatapp.models import Message
 from chatapp.permissions import IsMessageOwner
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 class DeleteMessageForEveryoneView(APIView):
     permission_classes = [IsMessageOwner]
 
-    # def permission_denied(self, request, message=None, code=None):
-    #     if request.authenticators and not request.successful_authenticator:
-    #         raise exceptions.NotAuthenticated()
-    #     raise exceptions.PermissionDenied(detail="You do not have permission to delete this message for everyone.")
-
+    @swagger_auto_schema(
+        operation_description="Deletes a message for all the partcipants of the chat",
+        manual_parameters=[
+            openapi.Parameter(
+                'message_id',
+                openapi.IN_PATH,
+                description="id of the message to be deleted",
+                type=openapi.TYPE_INTEGER,
+                required=True
+            ),
+            openapi.Parameter(
+                'Authorization',
+                openapi.IN_HEADER,
+                description="Token token",
+                type=openapi.TYPE_STRING,
+                required=True
+            )
+        ],
+        responses={
+            200: openapi.Response(
+                description="Successful deletion of the message",
+                examples={
+                     "application/json": {
+                        "status": "Message deleted for everyone"
+                    }
+                }
+    
+            ),
+            403: openapi.Response(
+                description="Can't delete a message not belonging to you",
+                examples={
+                    "application/json": {
+                        "detail": "You do not have permission to perform this action."
+                    }
+                }
+                ),
+            404: openapi.Response(
+                description="Message does not exist",
+                examples={
+                    "application/json": {
+                        "error": "Message does not exist"
+                    }
+                }
+                )
+        },
+        tags=['Messaging']
+    )
+    
     def delete(self, request, message_id):
         try:
             message = Message.objects.get(pk=message_id)
