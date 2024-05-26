@@ -67,4 +67,4 @@ class DeleteMessageForEveryoneView(APIView):
         message.deleted_for_all = True
         message.save()
         
-        return Response({"status": "Message deleted for everyone"}, status=status.HTTP_200_OK)
+        return Response({"status": "Message deleted for everyone"}, status=status.HTTP_204_NO_CONTENT)

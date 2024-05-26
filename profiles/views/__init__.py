@@ -2,3 +2,15 @@ from .ProfileUpdateAPIView import ProfileUpdateAPIView
 from .TemporaryProfileUpdateView import TemporaryProfileUpdateView
 from .ProfileDetailView import ProfileDetailView
 from .UserProfileView import UserProfileView
+from .UserPhotosView import UserPhotosView
+from .AddPhotosView import AddPhotosView
+from .DeletePhotosView import DeletePhotosView
+from .MyPhotosView import MyPhotosView
+from .AddFavoriteView import AddFavoriteView
+from .RemoveFavorite import RemoveFavoriteView
+from .MyFavoriteView import MyFavoriteView
+from .HobbiesView import HobbiesView
+from .MyHobbiesView import MyHobbiesView
+from .UserHobbiesView import UserHobbiesView
+from .AddHobbieView import AddHobbieView
+from .RemoveHobbieView import RemoveHobbieView

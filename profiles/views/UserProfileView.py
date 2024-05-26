@@ -5,6 +5,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from userauth.models import CustomUser
+from chatapp.models import Block
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 
@@ -66,5 +67,14 @@ class UserProfileView(APIView):
         
         user_profile=user.user_profile
         serializer = ProfileSerializer(user_profile)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        response_data=serializer.data
+        
+        # adding is_blocked flag
+        is_blocked=Block.objects.filter(blocker=user, blocked=request.user).exists()
+        response_data["is_blocked"]=is_blocked
+        # adding blocked other user flag
+        blocked_other_user=Block.objects.filter(blocker=request.user, blocked=user).exists()
+        response_data["blocked_other_user"]=blocked_other_user
+
+        return Response(response_data, status=status.HTTP_200_OK)
         

@@ -17,4 +17,4 @@ class DeleteMessageView(APIView):
         message.deleted_by_users.add(request.user)
         message.save()
         
-        return Response({"status": "Message deleted"}, status=status.HTTP_200_OK)
+        return Response({"status": "Message deleted"}, status=status.HTTP_204_NO_CONTENT)

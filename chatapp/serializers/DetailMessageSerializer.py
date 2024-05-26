@@ -13,7 +13,7 @@ class DetailMessageSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Message
-        fields = ['id', 'chat', 'sender', 'content', 'image','timestamp','deleted_for_user','is_mine','reply_to']
+        fields = ['id', 'chat', 'sender', 'content', 'image','timestamp','deleted_for_user','is_read','is_mine','reply_to']
 
     def get_deleted_for_user(self, obj):
         request = self.context.get('request')

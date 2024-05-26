@@ -4,12 +4,15 @@ from rest_framework import status
 from chatapp.models import Chat
 from chatapp.serializers import DetailChatSerializer
 from rest_framework.permissions import IsAuthenticated
+from chatapp.permissions import IsChatParticipant
+from chatapp.restrictions import can_send_message
+from chatapp.models import Block
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 
 
 class ChatDetailsView(APIView):
-    permission_classes=[IsAuthenticated]
+    permission_classes=[IsAuthenticated, IsChatParticipant]
     
     @swagger_auto_schema(
         operation_description="Retrieve details and messages of a specific chat",
@@ -95,7 +98,19 @@ class ChatDetailsView(APIView):
         except Chat.DoesNotExist:
             return Response({"error":"Chat does not exist"}, status=status.HTTP_404_NOT_FOUND)
         
+        self.check_object_permissions(request, chat)
+
         serializer = DetailChatSerializer(chat, context={'request': request})
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        
+        response_data=serializer.data        
+        # adding is_blocked flag
+        other_participant = chat.participants.exclude(id=request.user.id).first()
+        is_blocked=Block.objects.filter(blocker=other_participant, blocked=request.user).exists()
+        response_data["is_blocked"]=is_blocked
+        # adding blocked other user flag
+        blocked_other_user=Block.objects.filter(blocker=request.user, blocked=other_participant).exists()
+        response_data["blocked_other_user"]=blocked_other_user
+        
+        return Response(response_data, status=status.HTTP_200_OK)
         
         

@@ -7,4 +7,4 @@ class ChatUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = [ 'username', 'user_profile']
+        fields = [ 'id','username', 'user_profile']

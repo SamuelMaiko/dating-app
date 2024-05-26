@@ -81,4 +81,4 @@ class DeleteChatView(APIView):
         for message in messages:
             message.deleted_by_users.add(current_user)
 
-        return Response({"status": "Chat deleted for user"}, status=status.HTTP_200_OK)
+        return Response({"status": "Chat deleted for user"}, status=status.HTTP_204_NO_CONTENT)

@@ -9,6 +9,7 @@ class Message(models.Model):
     content = models.TextField()
     image = models.ImageField(upload_to='message_images/', null=True, blank=True)
     timestamp = models.DateTimeField(default=timezone.now)
+    is_read = models.BooleanField(default=False)
     deleted_for_sender = models.BooleanField(default=False)
     deleted_for_all = models.BooleanField(default=False)
     deleted_by_users = models.ManyToManyField(CustomUser, related_name='deleted_messages', blank=True)

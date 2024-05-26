@@ -5,6 +5,8 @@ from rest_framework.permissions import IsAuthenticated
 from chatapp.models import Chat, Message
 from chatapp.serializers import SendMessageSerializer
 from chatapp.permissions import IsChatParticipant
+from chatapp.restrictions import can_send_message
+from chatapp.models import Block
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 
@@ -33,6 +35,7 @@ class SendMessageView(APIView):
             type=openapi.TYPE_OBJECT,
             properties={
                 'content': openapi.Schema(type=openapi.TYPE_STRING, description='content of the message being sent'),
+                'image': openapi.Schema(type=openapi.TYPE_STRING, format=openapi.FORMAT_BINARY, description='Image file to be sent with the message'),
                 'reply_to': openapi.Schema(type=openapi.TYPE_INTEGER, description='id of the message being replied to'),
             },
             required=['content'],  # Add required fields if any
@@ -81,7 +84,18 @@ class SendMessageView(APIView):
         
         # Check permissions
         self.check_object_permissions(request, chat)
+
+        # handling where user has blocked the other user
+        other_participant = chat.participants.exclude(id=request.user.id).first()
+        blocked_other_user=Block.objects.filter(blocker=request.user, blocked=other_participant).exists()
+        if blocked_other_user:
+            return Response({"error":"You have blocked the user. You cannot send messages to this user"}, status=status.HTTP_403_FORBIDDEN)
         
+        # handling where user has been blocked
+        other_user=chat.participants.exclude(id=request.user.id).first()
+        if not can_send_message(request.user, other_user):
+            return Response({"error":"You are blocked. You cannot send messages to this user"}, status=status.HTTP_403_FORBIDDEN)
+
         serializer = SendMessageSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             # Ensure the sender is the logged-in user and associate the message with the chat

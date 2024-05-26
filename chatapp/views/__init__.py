@@ -6,3 +6,6 @@ from .DeleteMessageForEveryoneView import DeleteMessageForEveryoneView
 from .DeleteChatView import DeleteChatView
 from .CreateOrActivateChatView import CreateOrActivateChatView
 from .SendMessageView import SendMessageView
+from .MarkMessageAsReadView import MarkMessagesAsReadView
+from .BlockUserView import BlockUserView
+from .UnBlockUserView import UnBlockUserView

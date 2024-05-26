@@ -1,2 +1,5 @@
 from .TemporaryProfileSerializer import TemporaryProfileSerializer
 from .ProfileSerializer import ProfileSerializer
+from .UserPhotoSerializer import UserPhotoSerializer
+from .FavoriteSerializer import FavoriteSerializer
+from .HobbieSerializer import HobbieSerializer
