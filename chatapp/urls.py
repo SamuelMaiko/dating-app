@@ -14,6 +14,3 @@ urlpatterns = [
     path('block/user/<int:user_id>/', views.BlockUserView.as_view(), name='block-user'),
     path('unblock/user/<int:user_id>/', views.UnBlockUserView.as_view(), name='unblock-user'),
 ]
-
-# limit profile data sent to frontend if user is blocked
-# endpoint for blocked users

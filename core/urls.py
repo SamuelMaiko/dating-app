@@ -51,4 +51,3 @@ if settings.DEBUG:
    # searching and filtering
    # matching
    # realtime updates
-   # hobbies

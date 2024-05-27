@@ -13,6 +13,10 @@ class AddFavoriteView(APIView):
             user = request.user
             favorite_user = CustomUser.objects.get(pk=user_id)
             if user != favorite_user:
+                user_already_fav=Favorite.objects.filter(user=user, favorite=favorite_user).exists()
+                if user_already_fav:
+                    return Response({"error": "User already favorited"}, status=status.HTTP_400_BAD_REQUEST)
+                
                 Favorite.objects.create(user=user, favorite=favorite_user)
                 return Response({"status": "User added to favorites"}, status=status.HTTP_200_OK)
             return Response({"error": "You cannot favorite yourself"}, status=status.HTTP_400_BAD_REQUEST)

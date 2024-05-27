@@ -12,6 +12,9 @@ class RemoveFavoriteView(APIView):
         try:
             user = request.user
             favorite_user = CustomUser.objects.get(pk=user_id)
+            user_already_fav=Favorite.objects.filter(user=user, favorite=favorite_user).exists()
+            if not user_already_fav:
+                return Response({"error": "User not in favorites"}, status=status.HTTP_400_BAD_REQUEST)
             Favorite.objects.filter(user=user, favorite=favorite_user).delete()
             return Response({"message": "User removed from favorites"}, status=status.HTTP_204_NO_CONTENT)
         except CustomUser.DoesNotExist:

@@ -7,7 +7,7 @@ class Favorite(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = 'user_favorites'
+        db_table = 'favorites'
         unique_together = ('user', 'favorite')
 
     def __str__(self):

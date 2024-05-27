@@ -40,7 +40,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-1-3az+0i^!n6l-ozsp!o4hbzgo-53zfc-=)g=-=+t^+tj0b5p3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS=["maikomoringa.pythonanywhere.com", "localhost"]
 
@@ -69,7 +69,8 @@ INSTALLED_APPS = [
     'django_browser_reload',
     'drf_yasg',
     'corsheaders',
-]
+    'django_filters'
+,]
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',

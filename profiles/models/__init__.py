@@ -4,3 +4,4 @@ from .UserPhoto import UserPhoto
 from .Favorite import Favorite
 from .Hobbie import Hobbie
 from .HobbieProfile import HobbieProfile
+from .Favorite import Favorite
