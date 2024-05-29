@@ -11,7 +11,7 @@ class ProfileDetailView(APIView):
     permission_classes = [IsAuthenticated]
     
     @swagger_auto_schema(
-        operation_description="Retrieve the authenticated user's profile details.",
+        operation_description="Retrieve the profile of the logged user.",
         manual_parameters=[
             openapi.Parameter(
                 'Authorization',
@@ -23,22 +23,30 @@ class ProfileDetailView(APIView):
         ],
         responses={
             200: openapi.Response(
-                description="Profile details retrieved successfully",
-                schema=openapi.Schema(
-                    type=openapi.TYPE_OBJECT,
-                    properties={
-                        'username': openapi.Schema(type=openapi.TYPE_STRING, description='Username of the user'),
-                        'email': openapi.Schema(type=openapi.TYPE_STRING, description='Email of the user'),
-                        'profile_picture': openapi.Schema(type=openapi.TYPE_STRING, description='URL of the profile picture'),
-                        'bio': openapi.Schema(type=openapi.TYPE_STRING, description='Biography of the user'),
-                        'gender': openapi.Schema(type=openapi.TYPE_STRING, description='Gender of the user'),
-                        'date_of_birth': openapi.Schema(type=openapi.TYPE_STRING, description='Date of birth of the user'),
-                        'age': openapi.Schema(type=openapi.TYPE_INTEGER, description='Age of the user'),
-                        'denomination': openapi.Schema(type=openapi.TYPE_STRING, description='Denomination of the user'),
-                        'location': openapi.Schema(type=openapi.TYPE_STRING, description='Location of the user'),
-                        # Add more properties as needed
+                description="OK",
+                examples={
+                    "application/json":{
+                        "username": "ten3",
+                        "email": "samuel.maiko.dev@gmail.com",
+                        "profile_picture": "/media/temporary-profile-pictures/default.jpg",
+                        "bio": "Just testing stuff.",
+                        "gender": "Male",
+                        "date_of_birth": "1990-05-15",
+                        "age": 34,
+                        "denomination": None,
+                        "location": "Los Angeles, USA",
+                        "hobbies": [
+                            {
+                                "id": 1,
+                                "title": "Dancing"
+                            },
+                            {
+                                "id": 2,
+                                "title": "Playing video games"
+                            }
+                        ]
                     }
-                )
+                }
             ),
         },
         tags=['Profile']

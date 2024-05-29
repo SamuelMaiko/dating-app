@@ -6,9 +6,59 @@ from profiles.serializers import HobbieSerializer
 from userauth.models import CustomUser
 from profiles.models import Hobbie, HobbieProfile, UserProfile
 from django.db.models import Subquery
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 class UserHobbiesView(APIView):
     permission_classes=[IsAuthenticated]
+    
+    @swagger_auto_schema(
+    operation_description="Retrieves the hobbies of the user whose id has been passed.",
+    manual_parameters=[
+         openapi.Parameter(
+                'user_id',
+                openapi.IN_PATH,
+                description="ID of the user to retrieve their hobbies",
+                type=openapi.TYPE_INTEGER,
+                required=True
+            ),
+        openapi.Parameter(
+            'Authorization',
+            openapi.IN_HEADER,
+            description="Token token",
+            type=openapi.TYPE_STRING,
+            required=True
+        )
+    ],
+    responses={
+        200: openapi.Response(
+            description="Success",
+            examples={
+                "application/json": [
+                            {
+                                "id": 3,
+                                "title": "Reading"
+                            },
+                            {
+                                "id": 4,
+                                "title": "Watching movies"
+                            }
+                        ]
+                    }
+    
+            ),
+        404: openapi.Response(
+            description="Not found",
+            examples={
+                "application/json": {
+                    "error":"User with id doesn't exist."
+                }
+                    }
+    
+            ),
+        },
+        tags=['Hobbies']
+    )
     
     def get(self, request, user_id):
         try:

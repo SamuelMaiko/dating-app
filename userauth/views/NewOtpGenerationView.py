@@ -47,7 +47,7 @@ class NewOtpGenerationView(APIView):
                 }
             ),
         },
-        tags=['Authentication']
+        tags=['Forgot Password', 'Registration']
     )
     
     def post(self, request):

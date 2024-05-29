@@ -50,7 +50,7 @@ class ChangePasswordView(APIView):
                 }
             ),
         },
-        tags=['Authentication']
+        tags=['Profile']
     )
 
     def post(self, request):

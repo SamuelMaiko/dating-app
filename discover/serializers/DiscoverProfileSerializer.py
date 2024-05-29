@@ -9,7 +9,7 @@ class DiscoverProfileSerializer(serializers.ModelSerializer):
     
     class Meta:
         model=UserProfile
-        fields=['user_id','username','profile_picture','date_of_birth', "is_favorite"]
+        fields=['user_id','username','profile_picture','date_of_birth',"age", "is_favorite"]
         
     def get_username(self, obj):
         return obj.user.username

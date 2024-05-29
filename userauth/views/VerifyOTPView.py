@@ -57,7 +57,7 @@ class VerifyOTPView(APIView):
                 }
             ),
         },
-        tags=['Authentication']
+        tags=['Forgot Password']
     )
     
     def post(self, request):

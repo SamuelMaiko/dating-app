@@ -12,7 +12,7 @@ class CreateOrActivateChatView(APIView):
     permission_classes = [IsAuthenticated]  # Add appropriate permissions
     
     @swagger_auto_schema(
-        operation_description="Creates a chat between two users and returns the created chat",
+        operation_description="Creates or activates a chat between two users and returns the created chat",
         manual_parameters=[
             openapi.Parameter(
                 'Authorization',
@@ -31,23 +31,50 @@ class CreateOrActivateChatView(APIView):
         ),
         responses={
             201: openapi.Response(
-                description="Successful creation of chat",
+                description="Created",
                 examples={
                      "application/json": {
-                                "id": 4,
+                                "id": 1,
                                 "participants": [
                                     {
-                                        "username": "enock",
-                                        "user_profile": "null"
+                                        "id": 6,
+                                        "username": "sam",
+                                        "user_profile": {
+                                            "profile_picture": "/media/profile-pictures/default.jpg",
+                                            "bio": "My profile"
+                                        }
                                     }
                                 ],
-                                "last_message": "null"
+                                "last_message": {
+                                    "id": 31,
+                                    "chat": 1,
+                                    "sender": {
+                                        "id": 26,
+                                        "username": "ten3"
+                                    },
+                                    "content": "You can see this message but can't reply",
+                                    "image": "http://localhost:8000/media/message_images/wallpaperflare.com_wallpaper_3_n1rxgDd.jpg",
+                                    "timestamp": "2024-05-26T10:08:23.806265Z",
+                                    "deleted_for_user": False,
+                                    "is_read": False,
+                                    "is_mine": True,
+                                    "reply_to": None
+                                },
+                                "unread_messages_count": 0
                             }
                 }
     
             ),
+             403: openapi.Response(
+                description="Forbidden",
+                examples={
+                    "application/json": {
+                        "detail": "Authentication credentials were not provided."
+                    }
+                }
+            ),
             404: openapi.Response(
-                description="Other user's id not provided",
+                description="Not found",
                 examples={
                     "application/json": {
                         "error": "Other user ID is required"

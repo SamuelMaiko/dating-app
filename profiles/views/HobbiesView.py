@@ -5,9 +5,32 @@ from rest_framework.permissions import IsAuthenticated
 from profiles.serializers import HobbieSerializer
 from profiles.models import Hobbie, HobbieProfile, UserProfile
 from django.db.models import Subquery
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
-class HobbiesView(APIView):
-    permission_classes=[IsAuthenticated]
+class HobbiesView(APIView):    
+    @swagger_auto_schema(
+    operation_description="Returns all the hobbies available in the app to choose from.",
+    responses={
+        200: openapi.Response(
+            description="Success",
+            examples={
+                "application/json": [
+                            {
+                                "id": 3,
+                                "title": "Reading"
+                            },
+                            {
+                                "id": 4,
+                                "title": "Watching movies"
+                            }
+                        ]
+                    }
+    
+            ),
+        },
+        tags=['Hobbies']
+    )
     
     def get(self, request):
         user=request.user

@@ -4,9 +4,69 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from userauth.models import CustomUser
 from profiles.models import Favorite
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 class AddFavoriteView(APIView):
     permission_classes = [IsAuthenticated]
+    
+    @swagger_auto_schema(
+    operation_description="Allows the logged user to favorite another user.",
+    manual_parameters=[
+        openapi.Parameter(
+                'user_id',
+                openapi.IN_PATH,
+                description="Id of the user to be favorited.",
+                type=openapi.TYPE_INTEGER,
+                required=True
+            ),
+        openapi.Parameter(
+            'Authorization',
+            openapi.IN_HEADER,
+            description="Token token",
+            type=openapi.TYPE_STRING,
+            required=True
+        )
+    ],
+    responses={
+        200: openapi.Response(
+            description="Success",
+            examples={
+                "application/json": {
+                    "status": "User added to favorites"
+                }
+                    }
+    
+            ),
+            400: openapi.Response(
+                description="Bad request",
+                examples={
+                    "application/json": {
+                        "error": "You cannot favorite yourself",
+                        "error": "User already favorited"
+                    }
+                }
+                ),
+            403: openapi.Response(
+                description="Forbidden",
+                examples={
+                    "application/json": {
+                        "detail": "Authentication credentials were not provided."
+                    }
+                }
+                ),
+            404: openapi.Response(
+                description="Not Found",
+                examples={
+                    "application/json": {
+                        "error": "User does not exist"
+                    }
+                }
+                )
+        },
+        tags=['Favorites']
+    )
+
 
     def post(self, request, user_id):
         try:

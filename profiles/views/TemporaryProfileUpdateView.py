@@ -58,7 +58,7 @@ class TemporaryProfileUpdateView(APIView):
                 }
             ),
         },
-        tags=['Temporary Profile']
+        tags=['Registration']
     )
     
     def put(self, request, format=None):

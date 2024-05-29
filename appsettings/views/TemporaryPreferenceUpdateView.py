@@ -56,7 +56,7 @@ class TemporaryPreferenceUpdateView(APIView):
                 }
             ),
         },
-        tags=['Temporary Preferences']
+        tags=['Registration']
     )
     
     def put(self, request, format=None):

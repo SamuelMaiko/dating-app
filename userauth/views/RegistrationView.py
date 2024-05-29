@@ -50,7 +50,7 @@ class RegistrationView(APIView):
                 }
             ),
         },
-        tags=['Authentication']
+        tags=['Registration']
     )
 
     def post(self, request):

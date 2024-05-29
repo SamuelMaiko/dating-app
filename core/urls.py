@@ -47,7 +47,16 @@ if settings.DEBUG:
    # display user username, image, age
    # 
 
-   # todo
    # searching and filtering
+   # age
    # matching
+
+
+   # TODO
+   # shuffle discover and matches results
+   # after message sent create or activate chat if not 
    # realtime updates
+   # idle model (DeleteMessage)
+   # serving images in production
+   # handle environment variables
+   

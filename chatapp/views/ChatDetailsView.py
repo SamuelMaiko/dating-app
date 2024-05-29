@@ -15,13 +15,15 @@ class ChatDetailsView(APIView):
     permission_classes=[IsAuthenticated, IsChatParticipant]
     
     @swagger_auto_schema(
-        operation_description="Retrieve details and messages of a specific chat",
+        operation_description="Retrieves participants,  messages and details of the chat whose id has been provided",
         responses={
             200: openapi.Response(
                 description="Successful response",
                 examples={
                     "application/json": {
     "id": 1,
+    "is_blocked": "false",
+    "blocked_other_user": "false",
     "participants": [
         {
             "username": "sam",
@@ -33,45 +35,70 @@ class ChatDetailsView(APIView):
     ],
     "messages": [
         {
-            "id": 7,
+            "id": 30,
             "chat": 3,
             "sender": {
                 "id": 26,
                 "username": "ten3"
             },
-            "content": "Since highschool around form 2",
-            "image": "null",
-            "timestamp": "2024-05-21T12:21:53.661900Z",
-            "deleted_for_user": "false",
-            "is_mine": "true",
+            "content": "Wow!, I can actually send a  message with an image",
+            "image": "http://localhost:8000/media/message_images/wallpaperflare.com_wallpaper_3.jpg",
+            "timestamp": "2024-05-25T13:14:30.787100Z",
+            "deleted_for_user": False,
+            "is_read": False,
+            "is_mine": True,
+            "reply_to": None
+        },
+        {
+            "id": 11,
+            "chat": 3,
+            "sender": {
+                "id": 26,
+                "username": "ten3"
+            },
+            "content": "great",
+            "image": None,
+            "timestamp": "2024-05-21T13:46:36.274737Z",
+            "deleted_for_user": False,
+            "is_read": False,
+            "is_mine": True,
             "reply_to": {
-                "id": 6,
+                "id": 10,
                 "chat": 3,
                 "sender": {
                     "id": 26,
                     "username": "ten3"
                 },
-                "content": "WI am a Liverpool fan",
-                "image": "null",
-                "timestamp": "2024-05-21T12:03:18.008089Z",
-                "deleted_for_user": "false",
-                "is_mine": "true",
-                "reply_to": "null"
+                "content": "I can reply to no message, great",
+                "image": None,
+                "timestamp": "2024-05-21T13:34:29.425785Z",
+                "deleted_for_user": False,
+                "is_read":False,
+                "is_mine": True,
+                "reply_to": None
             }
-        }
+        },
     ]
     }
                     }
     
             ),
+            403: openapi.Response(
+                description="Forbidden",
+                examples={
+                    "application/json": {
+                        "detail": "Authentication credentials were not provided."
+                    }
+                }
+            ),
             404: openapi.Response(
-                description="Chat does not exist",
+                description="Not found",
                 examples={
                     "application/json": {
                         "error":"Chat does not exist"
                     }
                 }
-                )
+            )
         },
         manual_parameters=[
             openapi.Parameter(

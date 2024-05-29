@@ -14,7 +14,7 @@ class SendMessageView(APIView):
     permission_classes = [IsAuthenticated, IsChatParticipant]
     
     @swagger_auto_schema(
-        operation_description="Sends messages between users and returns the sent messages",
+        operation_description="Sends messages between users in a chat and returns the sent message",
         manual_parameters=[
             openapi.Parameter(
                 'chat_id',
@@ -42,34 +42,40 @@ class SendMessageView(APIView):
         ),
         responses={
             201: openapi.Response(
-                description="Successful sending oof message",
+                description="Created",
                 examples={
                      "application/json": {
-                                "id": 26,
-                                "chat": 1,
+                                "id": 32,
+                                "chat": 3,
                                 "sender": {
                                     "id": 26,
                                     "username": "ten3"
                                 },
-                                "content": "Just documenting stuff again",
-                                "image": "null",
-                                "timestamp": "2024-05-22T18:00:12.104523Z",
-                                "reply_to": "null",
-                                "is_mine": "true"
- 
-
+                                "content": "Hello documenting the APIs",
+                                "image": None,
+                                "timestamp": "2024-05-29T21:05:25.780520Z",
+                                "reply_to": None,
+                                "is_mine": True
                             }
                 }
     
             ),
+            403: openapi.Response(
+                description="Forbidden",
+                examples={
+                    "application/json": {
+                        "detail": "Authentication credentials were not provided."
+                    }
+                }
+            ),
             404: openapi.Response(
-                description="Chat does not exist",
+                description="Not found",
                 examples={
                     "application/json": {
                         "error":"Chat does not exist"
                     }
                 }
-                )
+            )
         },
         tags=['Messaging']
     )

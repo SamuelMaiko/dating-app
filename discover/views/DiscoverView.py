@@ -15,7 +15,7 @@ class DiscoverView(APIView):
     permission_classes = [IsAuthenticated]
     
     @swagger_auto_schema(
-        operation_description="Shows profiles of other users in the app to discover",
+        operation_description="Shows users in the app for the user to discover",
         manual_parameters=[
             openapi.Parameter('Authorization', openapi.IN_HEADER, description="Token token", type=openapi.TYPE_STRING, required=True),
             openapi.Parameter('min_age', openapi.IN_QUERY, type=openapi.TYPE_INTEGER, description='Minimum age'),
@@ -27,22 +27,32 @@ class DiscoverView(APIView):
         ],
         responses={
             200: openapi.Response(
-                description="Successful retrieval of profiles",
+                description="OK",
                 examples={
                     "application/json": [
                         {
-                            "user_id": 26,
-                            "username": "ten3",
-                            "profile_picture": "/media/temporary-profile-pictures/default.jpg",
-                            "date_of_birth": "1990-05-15",
-                            "age": 34
-                        },
-                        {
                             "user_id": 6,
                             "username": "sam",
-                            "profile_picture": "/media/profile-pictures/default.jpg",
-                            "date_of_birth": "2010-10-10",
-                            "age": 14
+                            "profile_picture": "http://localhost:8000/media/profile-pictures/default.jpg",
+                            "date_of_birth": "2020-10-10",
+                            "age": 3,
+                            "is_favorite": True
+                        },
+                        {
+                            "user_id": 3,
+                            "username": "enock",
+                            "profile_picture": "http://localhost:8000/media/profile-pictures/wallpaperflare.com_wallpaper_1_fE0Jszv.jpg",
+                            "date_of_birth": "2017-05-09",
+                            "age": 7,
+                            "is_favorite": True
+                        },
+                        {
+                            "user_id": 28,
+                            "username": "noobie",
+                            "profile_picture": "http://localhost:8000/media/profile-pictures/wallpaperflare.com_wallpaper_1_pOS7bAj.jpg",
+                            "date_of_birth": "2004-06-12",
+                            "age": 19,
+                            "is_favorite": False
                         }
                     ]
                 }
@@ -53,7 +63,7 @@ class DiscoverView(APIView):
     
     def get(self, request):
         # profiles=UserProfile.objects.all()
-        profiles = UserProfile.objects.all()
+        profiles = UserProfile.objects.exclude(user=request.user)
         filterset = UserProfileFilter(request.GET, queryset=profiles)
         if filterset.is_valid():
             profiles = filterset.qs

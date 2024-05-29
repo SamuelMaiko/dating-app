@@ -12,7 +12,7 @@ class UserChatsView(APIView):
     permission_classes = [IsAuthenticated]
     
     @swagger_auto_schema(
-        operation_description="Retrieves the list of chats of the current logged in user",
+        operation_description="Retrieves the chats of the logged user",
         manual_parameters=[
             openapi.Parameter(
                 'Authorization',
@@ -27,41 +27,75 @@ class UserChatsView(APIView):
                 description="Successful retrieval of chats",
                 examples={
                      "application/json": [
-                                    {
-                                        "id": 1,
-                                        "participants": [
-                                            {
-                                                "username": "sam",
-                                                "user_profile": {
-                                                    "profile_picture": "/media/profile-pictures/default.jpg",
-                                                    "bio": "My profile"
-                                                }
-                                            }
-                                        ],
-                                        "last_message": {
-                                            "id": 26,
-                                            "chat": 1,
-                                            "sender": {
-                                                "id": 26,
-                                                "username": "ten3"
-                                            },
-                                            "content": "Just documenting stuff again",
-                                            "image": "null",
-                                            "timestamp": "2024-05-22T18:00:12.104523Z",
-                                            "deleted_for_user": "false",
-                                            "is_mine": "true",
-                                            "reply_to": "null"
-                                        }
-                                    },
-                                    {
-                                        "another chat":""
-                                    },
-                                    {
-                                        "another chat":""
-                                    },
-                                    ]
+                {
+                    "id": 1,
+                    "participants": [
+                        {
+                            "id": 6,
+                            "username": "sam",
+                            "user_profile": {
+                                "profile_picture": "/media/profile-pictures/default.jpg",
+                                "bio": "My profile"
+                            }
+                        }
+                    ],
+                    "last_message": {
+                        "id": 31,
+                        "chat": 1,
+                        "sender": {
+                            "id": 26,
+                            "username": "ten3"
+                        },
+                        "content": "You can see this message but can't reply",
+                        "image": "http://localhost:8000/media/message_images/wallpaperflare.com_wallpaper_3_n1rxgDd.jpg",
+                        "timestamp": "2024-05-26T10:08:23.806265Z",
+                        "deleted_for_user": False,
+                        "is_read": False,
+                        "is_mine": True,
+                        "reply_to": None
+                    },
+                    "unread_messages_count": 0
+                },
+                {
+                    "id": 3,
+                    "participants": [
+                        {
+                            "id": 28,
+                            "username": "noobie",
+                            "user_profile": {
+                                "profile_picture": "/media/profile-pictures/wallpaperflare.com_wallpaper_1_pOS7bAj.jpg",
+                                "bio": "First lady of the platform"
+                            }
+                        }
+                    ],
+                    "last_message": {
+                        "id": 32,
+                        "chat": 3,
+                        "sender": {
+                            "id": 26,
+                            "username": "ten3"
+                        },
+                        "content": "Hello documenting the APIs",
+                        "image": None,
+                        "timestamp": "2024-05-29T21:05:25.780520Z",
+                        "deleted_for_user": False,
+                        "is_read": False,
+                        "is_mine": True,
+                        "reply_to": None
+                    },
+                    "unread_messages_count": 0
+                }
+            ]
                 }
     
+            ),
+             403: openapi.Response(
+                description="Forbidden",
+                examples={
+                    "application/json": {
+                        "detail": "Authentication credentials were not provided."
+                    }
+                }
             )
         },
         tags=['Messaging']
