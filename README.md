@@ -103,7 +103,7 @@ Before running the project, you need to set up your environment variables. Follo
 2. Open the `.env` file in a text editor:
     In VS code 
 
-        OR 
+    **OR** 
 
     ```bash
     nano .env  # or use any other text editor
