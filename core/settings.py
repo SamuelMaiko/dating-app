@@ -74,20 +74,20 @@ INSTALLED_APPS = [
 
 ASGI_APPLICATION='core.asgi.application'
 
-# CHANNEL_LAYERS = {
-#     "default": {
-#         "BACKEND": "channels.layers.InMemoryChannelLayer",
-#     },
-# }
 CHANNEL_LAYERS = {
     "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        'CONFIG':{
-            # 'hosts':[('redis://default:KPdpgkIghcmYkAyfwlHufejWeqUDXsuy@viaduct.proxy.rlwy.net:13892')]
-            "hosts": [("127.0.0.1", 6379)],
-        },
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
     },
 }
+#CHANNEL_LAYERS = {
+#    "default": {
+#        "BACKEND": "channels_redis.core.RedisChannelLayer",
+#        'CONFIG':{
+#            'hosts':[('redis://default:KPdpgkIghcmYkAyfwlHufejWeqUDXsuy@viaduct.proxy.rlwy.net:13892')]
+#            "hosts": [("127.0.0.1", 6379)],
+#        },
+#    },
+#}
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
