@@ -40,7 +40,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-1-3az+0i^!n6l-ozsp!o4hbzgo-53zfc-=)g=-=+t^+tj0b5p3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS=["maikomoringa.pythonanywhere.com", "localhost","127.0.0.1"]
 
@@ -65,8 +65,6 @@ INSTALLED_APPS = [
     'discover',
     'rest_framework',
     'rest_framework.authtoken',
-    'tailwind',
-    'theme',
     'django_browser_reload',
     'drf_yasg',
     'corsheaders',
@@ -85,7 +83,8 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         'CONFIG':{
-            'hosts':[('redis://default:KPdpgkIghcmYkAyfwlHufejWeqUDXsuy@viaduct.proxy.rlwy.net:13892')]
+            # 'hosts':[('redis://default:KPdpgkIghcmYkAyfwlHufejWeqUDXsuy@viaduct.proxy.rlwy.net:13892')]
+            "hosts": [("127.0.0.1", 6379)],
         },
     },
 }
@@ -111,11 +110,6 @@ INTERNAL_IPS=[
     "127.0.0.1",
 ]
 
-TAILWIND_APP_NAME='theme'
-
-NODEJS_BIN_PATH = '/c/Install/node'
-NPM_BIN_PATH = 'C:/Program Files/nodejs/npm.cmd'
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -139,10 +133,14 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
+    #Use this for development with SQLite
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+    
+    #Use this for production with PostgreSQL
+    
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql',
     #     'NAME': 'railway',
