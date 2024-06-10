@@ -5,7 +5,7 @@ from userauth.models import EmailOTP
 
 class ChatConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
-    def get_name(self):
+    def test_db_interaction(self):
         return EmailOTP.objects.create(user_id=6, otp="765672")
     
     async def connect(self):
@@ -45,7 +45,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             }
         )
         
-        await self.get_name()
+        await self.test_db_interaction()
         
 
     async def chat_message(self, event):
