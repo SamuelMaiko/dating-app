@@ -139,6 +139,19 @@ Before running the project, you need to set up your environment variables. Follo
     ALLOWED_HOSTS=localhost,127.0.0.1  # Add your allowed hosts here
     ```
 
+## Usage
+
+1. Access the development server at `http://127.0.0.1:8000/`.
+2. Use API endpoints to interact with the portal (e.g., fetch past papers, register for events).
+
+
+## API Documentation
+
+API documentation is available via Swagger. Once the development server is running, access the Swagger documentation at:
+
+[http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+
+
 ## Known Issues
 
 ### 1. Serving Images in Production
