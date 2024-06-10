@@ -15,9 +15,7 @@ A Django-based backend for a Christian dating app designed to help Christians mi
 ## Installation
 
 ### Prerequisites
-- Python 3.x
-- Django 3.x
-- PostgreSQL (or any preferred database)
+- Python 3.11.9 or higher
 
 ### Steps
 
@@ -32,9 +30,15 @@ A Django-based backend for a Christian dating app designed to help Christians mi
     ```
 
 3. Create a virtual environment and activate it:
+    **In Linux**
     ```bash
     python -m venv env
-    source env/bin/activate  # On Windows use `env\Scripts\activate`
+    source env/bin/activate
+    ```
+    **In Windows**
+    ```bash
+    python -m venv env
+    env\Scripts\activate 
     ```
 
 4. Install dependencies:
@@ -100,13 +104,13 @@ Before running the project, you need to set up your environment variables. Follo
     cp .env.example .env
     ```
 
-2. Open the `.env` file in a text editor:
-    In VS code 
+2. Open the `.env` file In VS code:
+    
 
     **OR** 
 
     ```bash
-    nano .env  # or use any other text editor
+    nano .env 
     ```
 
 3. Fill in your own configuration details. Here’s an explanation of each variable:
