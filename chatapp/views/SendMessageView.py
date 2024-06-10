@@ -7,8 +7,11 @@ from chatapp.serializers import SendMessageSerializer
 from chatapp.permissions import IsChatParticipant
 from chatapp.restrictions import can_send_message
 from chatapp.models import Block
+from chatapp.HelperFunctions import send_message_to_group
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from chatapp.consumers import ChatConsumer
+import json
 
 class SendMessageView(APIView):
     permission_classes = [IsAuthenticated, IsChatParticipant]
@@ -80,6 +83,7 @@ class SendMessageView(APIView):
         tags=['Messaging']
     )
 
+    
     def post(self, request, chat_id):
         try:
             chat = Chat.objects.get(pk=chat_id)
@@ -106,5 +110,6 @@ class SendMessageView(APIView):
         if serializer.is_valid():
             # Ensure the sender is the logged-in user and associate the message with the chat
             serializer.save(sender=request.user, chat=chat)
+            
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

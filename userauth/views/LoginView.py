@@ -88,13 +88,10 @@ class LoginView(APIView):
             user_instance=get_object_or_404(CustomUser, username=username)
             serializer=UserSerializer(user_instance)
             
-            response_dict={"user":serializer.data}
-            # using an existing token
-            if token:
-                response_dict["token"]=token.key
-            # using a created token if not existed before  
-            elif created_token:
-                response_dict["token"]=created_token.key
+            response_dict={
+                "user":serializer.data,
+                "token":token.key
+                }
                 
             return Response(response_dict, status=status.HTTP_200_OK)
         # If user returns NONE = wrong credentials

@@ -6,6 +6,7 @@ from userauth.models import EmailOTP
 from userauth.HelperFunctions import generate_otp
 from userauth.signals import send_otp_signal
 from userauth.models import CustomUser
+from django.utils import timezone
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 
@@ -64,7 +65,7 @@ class NewOtpGenerationView(APIView):
         # generating new otp
         new_otp=generate_otp()
         # updating user's otp
-        EmailOTP.objects.filter(user=user).update(otp=new_otp)
+        EmailOTP.objects.filter(user=user).update(otp=new_otp, timestamp=timezone.now())
         
         send_otp_signal.send(sender=None,user=user)
         

@@ -21,7 +21,14 @@ class UserProfileView(APIView):
                 description="Token token",
                 type=openapi.TYPE_STRING,
                 required=True
-            )
+            ),
+            openapi.Parameter(
+                'user_id',
+                openapi.IN_PATH,
+                description="ID of the user to retrieve profile",
+                type=openapi.TYPE_INTEGER,
+                required=True
+            ),
         ],
         responses={
             200: openapi.Response(

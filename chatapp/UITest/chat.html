@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Works</h1>
+
+    <form method="post" id="form">
+        <input type="text" id="message">
+        <input type="submit" >
+
+    </form>
+
+    <div id="messages"></div>
+
+    <script type="text/javascript">
+        // const url=`ws://127.0.0.1:8000/ws/socket-server/`
+        const url=`ws://127.0.0.1:8000/ws/chat/1/`
+
+        const chatSocket=new WebSocket(url)
+
+        chatSocket.onmessage=(e)=>{
+            const data=JSON.parse(e.data)
+            console.log("Data:",data)
+
+            if (data.type=="new_message"){
+                // console.log(data.message )
+                const screen = document.getElementById("messages")
+                screen.insertAdjacentHTML('beforeend', `
+                <div>
+                    <p>${data.content}</p>
+                </div>
+                `)
+            }
+        }
+
+        form=document.getElementById("form")
+        form.addEventListener("submit",(e)=>{
+            e.preventDefault()
+
+            message=e.target.message.value
+
+            chatSocket.send(
+                JSON.stringify({
+                    message:message
+                })
+            )
+
+            form.reset()
+        })
+
+
+    </script>
+</body>
+</html>

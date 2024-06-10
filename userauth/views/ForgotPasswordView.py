@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from userauth.signals import send_otp_signal
 from userauth.HelperFunctions import generate_otp
 from userauth.models import EmailOTP
+from django.utils import timezone
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 
@@ -52,7 +53,7 @@ class ForgotPasswordView(APIView):
         # generating new otp (because we use the same for email verification earlier)
         new_otp=generate_otp()
         # updating the otp
-        EmailOTP.objects.filter(user=user).update(otp=new_otp)
+        EmailOTP.objects.filter(user=user).update(otp=new_otp, timestamp=timezone.now())
         # signal to send otp to user's email
         send_otp_signal.send(sender=None, user=user)
         
