@@ -12,13 +12,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-1-3az+0i^!n6l-ozsp!o4hbzgo-53zfc-=)g=-=+t^+tj0b5p3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = os.environ.get('DEBUG', 'False')
-# if DEBUG.lower() in ['true', '1', 'yes']:
-#     DEBUG = True
-# else:
-#     DEBUG = False
-    
-DEBUG = os.environ.get('DEBUG', 'False').lower() in ['true', '1', 'yes']
+DEBUG=True
+# DEBUG = os.environ.get('DEBUG', 'False').lower() in ['true', '1', 'yes']
 
 ALLOWED_HOSTS=["maikomoringa.pythonanywhere.com", "localhost","127.0.0.1"]
 
@@ -187,10 +182,18 @@ REST_FRAMEWORK = {
 
 # email configs
 
-EMAIL_HOST = os.environ.get('EMAIL_HOST')
-EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
-EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True').lower() == 'true'
-EMAIL_USE_SSL = os.environ.get('EMAIL_USE_SSL', 'False').lower() == 'true'
+# EMAIL_HOST = os.environ.get('EMAIL_HOST')
+# EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
+# EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
+# EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+# EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True').lower() == 'true'
+# EMAIL_USE_SSL = os.environ.get('EMAIL_USE_SSL', 'False').lower() == 'true'
+
+EMAIL_BACKEND="django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST="smtp.gmail.com"
+EMAIL_PORT=587
+EMAIL_HOST_USER="sammymaiko721@gmail.com"
+EMAIL_HOST_PASSWORD="mpjy fzjp eovw yobl"
+EMAIL_USE_TLS=True
+EMAIL_USE_SSL=False
