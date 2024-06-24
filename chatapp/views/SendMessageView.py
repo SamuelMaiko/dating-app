@@ -12,6 +12,9 @@ from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from chatapp.consumers import ChatConsumer
 import json
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
+channel_layer = get_channel_layer()
 
 class SendMessageView(APIView):
     permission_classes = [IsAuthenticated, IsChatParticipant]
@@ -110,6 +113,17 @@ class SendMessageView(APIView):
         if serializer.is_valid():
             # Ensure the sender is the logged-in user and associate the message with the chat
             serializer.save(sender=request.user, chat=chat)
+            
+            channel_layer = get_channel_layer()
+        
+            async_to_sync(channel_layer.group_send)(
+                "NY",
+                {
+                    "type": "chat.message",
+                    "message": "announcement_text 22"
+                }
+            )
+            print("Woow")
             
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

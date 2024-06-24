@@ -17,13 +17,13 @@ from channels.security.websocket import AllowedHostsOriginValidator
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 
-application = ProtocolTypeRouter(
-    {
-        "http": get_asgi_application(),
-        "websocket": AllowedHostsOriginValidator(
-            AuthMiddlewareStack(URLRouter(
-                chatapp.routing.websocket_urlpatterns
-            ))
+django_asgi_app = get_asgi_application()
+
+from chat.routing import websocket_urlpatterns
+
+application = ProtocolTypeRouter({
+    "http": django_asgi_app,
+    "websocket": AllowedHostsOriginValidator(
+            AuthMiddlewareStack(URLRouter(websocket_urlpatterns))
         ),
-    }
-)
+})
