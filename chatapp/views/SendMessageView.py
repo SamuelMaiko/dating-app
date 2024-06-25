@@ -120,7 +120,7 @@ class SendMessageView(APIView):
                 "NY",
                 {
                     "type": "chat.message",
-                    "message": "announcement_text 22"
+                    "message": request.data.get("content")
                 }
             )
             print("Woow")

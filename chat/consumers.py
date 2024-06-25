@@ -2,8 +2,7 @@ import json
 
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
-# from django.contrib.auth.models import User
-from userauth.models import CustomUser as User
+from userauth.models import CustomUser
 import random
 
 class ChatConsumer(AsyncWebsocketConsumer):
@@ -11,7 +10,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 # async def connect(self):
 
     def get_name(self, message):
-        User.objects.create_user(username=f"{message}{random.randint(0,1000)}", password="lastone447", email=f"{message}{random.randint(0,1000)}@gmail.com")
+        CustomUser.objects.create_user(username=f"{message}{random.randint(0,1000)}", password="lastone447", email=f"{message}{random.randint(0,1000)}@gmail.com")
 
     async def connect(self):
         self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
