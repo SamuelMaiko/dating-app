@@ -6,9 +6,10 @@ class SendMessageSerializer(serializers.ModelSerializer):
     reply_to = serializers.PrimaryKeyRelatedField(queryset=Message.objects.all(), required=False, allow_null=True)
     is_mine=serializers.SerializerMethodField()
     image = serializers.ImageField(required=False)
+    content = serializers.CharField(required=False)
     
     class Meta:
-        model = Message
+        model = Message 
         fields = ['id', 'chat', 'sender', 'content','image', 'timestamp','reply_to', 'is_mine']
         read_only_fields = ['id', 'sender', 'timestamp']
 

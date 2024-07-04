@@ -93,7 +93,7 @@ class SendMessageView(APIView):
         except Chat.DoesNotExist:
             return Response({"error": "Chat does not exist"}, status=status.HTTP_404_NOT_FOUND)
 
-        request.data["chat"]=chat.id
+        # request.data["chat"]=chat.id
         
         # Check permissions
         self.check_object_permissions(request, chat)
@@ -108,8 +108,9 @@ class SendMessageView(APIView):
         other_user=chat.participants.exclude(id=request.user.id).first()
         if not can_send_message(request.user, other_user):
             return Response({"error":"You are blocked. You cannot send messages to this user"}, status=status.HTTP_403_FORBIDDEN)
-
-        serializer = SendMessageSerializer(data=request.data, context={'request': request})
+        data=request.data.copy()
+        data["chat"]=chat.id
+        serializer = SendMessageSerializer(data=data, context={'request': request})
         if serializer.is_valid():
             # Ensure the sender is the logged-in user and associate the message with the chat
             serializer.save(sender=request.user, chat=chat)
@@ -117,10 +118,17 @@ class SendMessageView(APIView):
             channel_layer = get_channel_layer()
         
             async_to_sync(channel_layer.group_send)(
-                "NY",
+                "chat_NY",
                 {
                     "type": "chat.message",
-                    "message": request.data.get("content")
+                    "message": {
+                        "id":serializer.data["id"],
+                        "content":serializer.data["content"],
+                        "sender":serializer.data["sender"],
+                        'image':serializer.data["image"],
+                        "timestamp":serializer.data["timestamp"],
+                        "reply_to":serializer.data["reply_to"]
+                    }
                 }
             )
             print("Woow")

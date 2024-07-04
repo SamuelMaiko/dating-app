@@ -12,6 +12,14 @@
     {{ room_name|json_script:"room-name" }}
     <script>
         const roomName = JSON.parse(document.getElementById('room-name').textContent);
+        
+        function getToken() {
+        // Example: getting token from the URL (adjust as needed)
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('token') || 'defaultToken';  // Fallback to 'defaultToken' if not found
+        }
+
+        const token = getToken();
 
         const chatSocket = new WebSocket(
             'ws://'
@@ -19,11 +27,14 @@
             + '/ws/chat/'
             + roomName
             + '/'
+            +"?token="
+            +token
         );
 
         chatSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
-            document.querySelector('#chat-log').value += (data.message + '\n');
+            document.querySelector('#chat-log').value += (data.content + '\n');
+            console.log(data)
         };
 
         chatSocket.onclose = function(e) {
